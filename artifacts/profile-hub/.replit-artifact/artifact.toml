@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Cinematic Profile Hub"
+description = "A premium personal profile hub for sharing a bio, social links, projects, services, and contact details through an expressive, motion-led experience."
+version = "1.0.0"
+id = "artifacts/profile-hub"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24359
+
+[services.development]
+run = "pnpm --filter @workspace/profile-hub run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/profile-hub", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/profile-hub/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24359"
+BASE_PATH = "/"
