@@ -5,10 +5,9 @@ import {
   ArrowUpRight,
   Check,
   Copy,
-  Globe2,
-  Instagram,
-  Linkedin,
+  Github,
   Mail,
+  Twitter,
 } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -18,22 +17,22 @@ import NotFound from '@/pages/not-found';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
 const queryClient = new QueryClient();
-const email = 'hello@averymakes.studio';
+const email = 'ifeoluwaoludemi34@gmail.com';
 
 const links = [
-  { label: 'Instagram', href: 'https://www.instagram.com/', icon: Instagram },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: Linkedin },
-  { label: 'Portfolio', href: 'https://www.averymakes.studio/', icon: Globe2 },
+  { label: 'X', href: 'https://x.com/ifeteddy0108', icon: Twitter },
+  { label: 'GitHub', href: 'https://github.com/valorian0108', icon: Github },
 ];
 
 const projects = [
   {
     id: 'orbit',
     type: 'Brand world · 2024',
-    name: 'Orbit / a softer internet',
-    detail: 'Identity, editorial system, digital experience',
-    art: 'art-orbit',
-    href: 'https://www.averymakes.studio/orbit',
+    name: 'Emble Creative Academy',
+    detail: 'Creative education, visual storytelling, and opportunity',
+    art: 'art-featured',
+    image: '/images/image.png',
+    href: 'https://emblecreativeacademy.netlify.app/',
   },
   {
     id: 'field-notes',
@@ -41,6 +40,7 @@ const projects = [
     name: 'Field Notes',
     detail: 'Art direction, web design',
     art: 'art-paper',
+    image: undefined,
     href: 'https://www.averymakes.studio/field-notes',
   },
   {
@@ -49,6 +49,7 @@ const projects = [
     name: 'Tide House',
     detail: 'Strategy, identity',
     art: 'art-tide',
+    image: undefined,
     href: 'https://www.averymakes.studio/tide-house',
   },
 ];
@@ -85,6 +86,32 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function AnimatedName({ reduced }: { reduced: boolean }) {
+  return (
+    <motion.p
+      className="hero-name"
+      aria-label="Ife Demi"
+      initial={reduced ? false : 'hidden'}
+      animate={reduced ? undefined : 'visible'}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.06, delayChildren: 0.42 } },
+      }}
+    >
+      {'Ife Demi'.split('').map((character, index) => (
+        <motion.span
+          key={`${character}-${index}`}
+          aria-hidden="true"
+          variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {character === ' ' ? '\u00a0' : character}
+        </motion.span>
+      ))}
+    </motion.p>
+  );
+}
+
 function IntroPanel({ reduced }: { reduced: boolean }) {
   return (
     <motion.section
@@ -101,9 +128,9 @@ function IntroPanel({ reduced }: { reduced: boolean }) {
         <h2 className="section-title">Less noise.<br />More meaning.</h2>
       </div>
       <p className="intro-copy" data-testid="text-about">
-        I’m Avery — a creative director and digital maker based between <strong>London</strong> and
-        wherever the work takes me. I help thoughtful people turn early, slightly blurry ideas into
-        worlds with shape, rhythm and a reason to exist.
+        I’m Ife Demi — a content creator in <strong>Nigeria</strong>, creating with AI and turning
+        ambitious ideas into work with shape, rhythm, and a reason to exist. I’m your knight in
+        shining armour when a good idea needs a creative direction.
       </p>
     </motion.section>
   );
@@ -139,7 +166,7 @@ function Home() {
           data-testid="button-scroll-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          A
+          I
         </button>
         <div className="nav-links">
           <button type="button" data-testid="button-nav-work" onClick={() => scrollToSection('work')}>
@@ -161,13 +188,13 @@ function Home() {
           variants={reveal}
           transition={{ ...revealTransition, delay: 0.3 }}
         >
-          <p className="eyebrow" data-testid="text-availability">Independent creative director</p>
+          <p className="eyebrow" data-testid="text-availability">Content creator · Creating with AI</p>
+          <AnimatedName reduced={reduced} />
           <h1 data-testid="text-hero-title">
             Make room<br />for the <em>good</em><br />stuff.
           </h1>
           <p className="hero-intro" data-testid="text-hero-intro">
-            A quiet corner for the things I make, the people I work with, and a few ideas I keep
-            coming back to.
+            A creative corner for content, AI-powered ideas, and the people building what comes next.
           </p>
           <div className="hero-actions">
             <motion.a
@@ -194,8 +221,8 @@ function Home() {
           transition={{ duration: 1.2, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="portrait-backdrop" aria-hidden="true" />
-          <div className="portrait-label">Avery / 01<br />a study in becoming</div>
-          <div className="portrait-index">London · 51°30′N</div>
+          <div className="portrait-label">Ife Demi / 01<br />a study in becoming</div>
+          <div className="portrait-index">Nigeria · creating with AI</div>
         </motion.div>
       </section>
       <p className="scroll-cue" aria-hidden="true">Scroll to wander <span /></p>
@@ -240,7 +267,9 @@ function Home() {
               whileHover={reduced ? undefined : { y: -6 }}
               whileTap={reduced ? undefined : { scale: 0.992 }}
             >
-              <div className={`work-art ${project.art}`} aria-hidden="true" />
+              <div className={`work-art ${project.art}`} aria-hidden="true">
+                {project.image && <img src={project.image} alt="Emble Creative Academy visual" />}
+              </div>
               <div className="work-meta">
                 <span>{project.type}</span>
                 <ArrowUpRight size={16} strokeWidth={1.5} />
@@ -269,7 +298,7 @@ function Home() {
           <div>
             <p className="section-kicker">Ways we could work together</p>
             <h2 className="section-title" data-testid="text-services-title">The useful<br />magic.</h2>
-            <p className="services-intro mt-6">Small team energy, senior attention. I join at the beginning, when there is still room for the unexpected.</p>
+            <p className="services-intro mt-6">Content with a point of view, AI-assisted creative exploration, and thoughtful storytelling for people building what comes next.</p>
           </div>
           <div className="services-list" data-testid="list-services">
             {services.map((service, index) => (
@@ -310,7 +339,7 @@ function Home() {
             className="email-button"
             type="button"
             data-testid="button-copy-email"
-            aria-label={copied ? 'Email address copied' : 'Copy Avery email address'}
+            aria-label={copied ? 'Email address copied' : 'Copy Ife Demi email address'}
             onClick={copyEmail}
           >
             {copied ? <Check size={16} /> : <Mail size={16} />}
@@ -321,7 +350,7 @@ function Home() {
       </section>
 
       <footer className="site-footer" data-testid="footer-profile">
-        <span>© {new Date().getFullYear()} Avery / made with care</span>
+        <span>© {new Date().getFullYear()} Ife Demi / made with care</span>
         <div className="footer-socials">
           {links.map((link) => {
             const Icon = link.icon;
@@ -331,7 +360,7 @@ function Home() {
                 target="_blank"
                 rel="noreferrer"
                 key={link.label}
-                aria-label={`Avery on ${link.label}`}
+                aria-label={`Ife Demi on ${link.label}`}
                 data-testid={`link-social-${link.label.toLowerCase()}`}
               >
                 <Icon size={15} strokeWidth={1.6} />

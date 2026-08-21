@@ -197,6 +197,22 @@
   gap: clamp(2.5rem, 8vw, 9rem);
 }
 
+.hero-name {
+  display: flex;
+  margin: 1.15rem 0 0;
+  color: var(--plum);
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.7rem, 3.2vw, 3.1rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.hero-name span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
 .eyebrow {
   display: flex;
   align-items: center;
@@ -217,7 +233,7 @@
 
 .hero h1 {
   max-width: 720px;
-  margin: 1.35rem 0 1.5rem;
+  margin: 0.9rem 0 1.5rem;
   color: var(--ink);
   font-family: var(--app-font-serif);
   font-size: clamp(4rem, 9.2vw, 9.5rem);
@@ -475,6 +491,26 @@
 
 .work-card:hover .work-art {
   transform: scale(1.04) rotate(-2deg);
+}
+
+.work-card:hover .art-featured {
+  transform: scale(1.015);
+}
+
+.art-featured {
+  display: grid;
+  place-items: center;
+  background: #0d0d0d;
+}
+
+.art-featured img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .art-orbit {
@@ -756,6 +792,10 @@
     grid-template-columns: 1fr;
     padding-top: 4.5rem;
     gap: 3rem;
+  }
+
+  .hero-name {
+    font-size: clamp(1.65rem, 8vw, 2.5rem);
   }
 
   .hero h1 {
